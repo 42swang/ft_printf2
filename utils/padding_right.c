@@ -4,7 +4,7 @@ void	padding_right(t_info *info)
 {
 	if (!(info->flag & MINUS))
 		return ;
-	while (info->width > 1)
+	while (info->width - info->prt_len > 0)
 	{
 		info->ret_len += ft_putchar(' ');
 		info->width -= 1;
