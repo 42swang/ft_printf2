@@ -11,7 +11,7 @@ echo 프로젝트 위치: $REAL_PATH
 # 테스트 적용 위해 다시 컴파일 (make re 사용)
 cd $REAL_PATH
 make re
-echo "" > test_result.txt
+echo ""
 
 
 
@@ -83,3 +83,4 @@ make
 gcc leaks.c libftprintf.a
 ./a.out
 cat leaks.c
+rm -rf a.out
