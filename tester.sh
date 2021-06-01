@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # 이거를 프로젝트 폴더로 수정하세요!
-PROJ_PATH=./ft_printf
-
+PROJ_PATH=.
 
 # 실제 프로젝트 폴더 위치로 이동
 REAL_PATH=$(cd $(dirname $0) && cd ${PROJ_PATH} && pwd)
@@ -83,3 +82,4 @@ echo -e '########## leaks test ##########'
 make
 gcc leaks.c libftprintf.a
 ./a.out
+cat leaks.c
