@@ -11,6 +11,7 @@ AR = ar rcs
 SRCS = sources/ft_isdigit.c\
 		sources/ft_itoa.c\
 		sources/ft_itoa_hexa.c\
+		sources/ft_itoa_ptr.c\
 		sources/ft_putchar.c\
 		sources/ft_putstr.c\
 		sources/ft_strchr.c\
@@ -25,6 +26,8 @@ SRCS = sources/ft_isdigit.c\
 		utils/type_num.c\
 		utils/type_u_num.c\
 		utils/type_hexa.c\
+		utils/type_ptr.c\
+		utils/type_percent.c\
 		utils/print_zero.c\
 		ft_printf.c
 
@@ -43,7 +46,7 @@ clean:
 
 fclean: clean
 		$(RM) $(NAME)
-	
+
 re:		fclean all
 
 .PHONY:	all clean fclean re

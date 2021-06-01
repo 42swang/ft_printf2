@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: swang <swang@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/01 15:41:12 by swang             #+#    #+#             */
+/*   Updated: 2021/06/01 15:43:21 by swang            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
 static char	*ft_zero(int count)
@@ -29,7 +41,7 @@ static char	*ft_plus(long long int num, int count)
 	return (str);
 }
 
-char	*ft_itoa(long long int n)
+char		*ft_itoa(long long int n)
 {
 	int				count;
 	long long int	c_num;

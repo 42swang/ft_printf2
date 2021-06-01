@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_hexa.c                                     :+:      :+:    :+:   */
+/*   ft_itoa_ptr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swang <swang@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/01 15:40:57 by swang             #+#    #+#             */
-/*   Updated: 2021/06/01 17:19:18 by swang            ###   ########.fr       */
+/*   Created: 2021/06/01 15:41:05 by swang             #+#    #+#             */
+/*   Updated: 2021/06/01 17:19:21 by swang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*ft_zero(int count)
 	return (str);
 }
 
-static char	*ft_plus(unsigned int num, int count, char *base)
+static char	*ft_plus(unsigned long long num, int count, char *base)
 {
 	char			*str;
 	unsigned int	idx;
@@ -43,15 +43,15 @@ static char	*ft_plus(unsigned int num, int count, char *base)
 	return (str);
 }
 
-char		*ft_itoa_hexa(unsigned int x, char *base)
+char		*ft_itoa_ptr(unsigned long long p, char *base)
 {
-	int				count;
-	unsigned int	c_num;
-	unsigned int	num;
+	int					count;
+	unsigned long long	c_num;
+	unsigned long long	num;
 
 	count = 0;
-	c_num = x;
-	num = x;
+	c_num = p;
+	num = p;
 	while (1 <= c_num)
 	{
 		c_num = (c_num / 16);

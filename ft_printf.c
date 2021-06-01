@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: swang <swang@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/01 15:49:23 by swang             #+#    #+#             */
+/*   Updated: 2021/06/01 17:33:30 by swang            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static int	print_info(va_list ap, t_info *info)
 {
 	int		ret;
 	char	type;
-	
+
 	ret = 0;
 	type = info->type;
 	if (type == 'c')
@@ -17,21 +29,19 @@ static int	print_info(va_list ap, t_info *info)
 		ret += type_num(va_arg(ap, int), info);
 	else if (type == 'x' || type == 'X')
 		ret += type_hexadecimal(va_arg(ap, unsigned int), info);
-	/*
 	else if (type == 'p')
-		ret += type_pointer(ap, info);
+		ret += type_pointer(va_arg(ap, unsigned long long), info);
 	else if (type == '%')
 		ret += type_percent(info);
-	*/
 	return (ret);
 }
 
-void	star_and_digit(va_list ap, t_info *info, char c)
+void		star_and_digit(va_list ap, t_info *info, char c)
 {
 	if (c == '*')
 	{
 		info->flag |= STAR;
-		if (info->flag & DOT) //좌에서 우로 읽기 떄문에 dot잇으면 너비아님
+		if (info->flag & DOT)
 			info->prec = va_arg(ap, int);
 		else
 			info->width = va_arg(ap, int);
@@ -48,19 +58,19 @@ void	star_and_digit(va_list ap, t_info *info, char c)
 	}
 }
 
-void	save_info(va_list ap, t_info *info, char c)
+void		save_info(va_list ap, t_info *info, char c)
 {
 	if (c == '.')
 	{
 		info->flag |= DOT;
 		info->prec = 0;
 	}
-	else if (c == '-' && info->flag & DOT) //dot이후에 음수가 나오면 숫자를 너비로 취급
+	else if (c == '-' && info->flag & DOT)
 	{
 		info->flag |= MINUS;
-		info->flag &= ~DOT; //플래그 끄기
-		info->flag = -1; // 꺼진상태는 기본값 -1
-		info->width = 0; //새로운 너비 적용하기 위해서 0으로.. (-만나오고 숫자가 안나오면 어떻게 작동할지 정확하게는 아직 모름)...
+		info->flag &= ~DOT;
+		info->flag = -1;
+		info->width = 0;
 	}
 	else if (c == '-')
 		info->flag |= MINUS;
@@ -72,42 +82,46 @@ void	save_info(va_list ap, t_info *info, char c)
 		star_and_digit(ap, info, c);
 }
 
-static int	check_fmt(va_list ap, const char *fmt)
+static int	check_fmt(va_list ap, t_info *info, const char *fmt)
 {
-	int	i;
-	int	ret;
-	t_info	*info;
+	int		i;
+	int		ret;
 
 	i = 0;
 	ret = 0;
-	info = (t_info *)malloc(sizeof(t_info));
-	while (fmt[i] != '\0') //1번 : 이부분은 모든 문자열이 끝날때까지 반복하는 구간
+	while (fmt[i] != '\0')
 	{
 		init_info(info);
-		while (fmt[i] != '%' && fmt[i] != '\0') // 2: %가 나오기 전까지 출력 단,printf("test\n") 처럼 단순출력일 경우를 고려.
+		while (fmt[i] != '%' && fmt[i] != '\0')
 			ret += ft_putchar(fmt[i++]);
-		if (fmt[i] == '%') // 위의 while문에서 널문자여도 1번 안에 들어온 이상 전부 작동하고 넘어감. %인지 체크하기
-		{	
+		if (fmt[i] == '%')
+		{
 			i++;
-			while (!(ft_strchr(TYPE, fmt[i])) && fmt[i] != '\0')//%다음에 바로 서식지정자가 아니면 플래그 관련된거라서 보내기
-				save_info(ap, info, fmt[i++]); //인덱스를 모두 여기서 넘김
-			if (ft_strchr(TYPE, fmt[i]))//위에서 ++하고 넘어온 인덱스의 문자가 서식지정자인지 체크하기
-				info->type = fmt[i++]; //서식지정자가 나오면 저장해주자
+			while (!(ft_strchr(TYPE, fmt[i])) && fmt[i] != '\0')
+				save_info(ap, info, fmt[i++]);
+			if (fmt[i] == '\0')
+				return (0);
+			if (ft_strchr(TYPE, fmt[i]))
+				info->type = fmt[i++];
 			handle_info(info);
-			ret += print_info(ap, info);//저장 다하고 넘어왔으니 출력해주자 printf("abc%defg", 100); 이라면 abc%d 까지 처리완료.
+			ret += print_info(ap, info);
 		}
 	}
 	return (ret);
 }
 
-int			ft_printf(const char * fmt, ...)
+int			ft_printf(const char *fmt, ...)
 {
 	va_list	ap;
+	t_info	*info;
 	int		ret;
 
 	ret = 0;
+	info = (t_info *)malloc(sizeof(t_info));
 	va_start(ap, fmt);
-	ret = check_fmt(ap, fmt);
+	ret = check_fmt(ap, info, fmt);
 	va_end(ap);
+	free(info);
+	info = 0;
 	return (ret);
 }

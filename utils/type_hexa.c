@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   type_hexa.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: swang <swang@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/01 15:44:10 by swang             #+#    #+#             */
+/*   Updated: 2021/06/01 15:46:05 by swang            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
 int	type_hexadecimal(unsigned int x, t_info *info)
@@ -23,5 +35,5 @@ int	type_hexadecimal(unsigned int x, t_info *info)
 		info->ret_len += ft_putchar('0');
 	info->ret_len += ft_putstr(x_nbr);
 	padding_right(info);
-	return(info->ret_len);
+	return (info->ret_len);
 }
