@@ -6,7 +6,7 @@
 /*   By: swang <swang@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 15:44:21 by swang             #+#    #+#             */
-/*   Updated: 2021/06/01 17:13:19 by swang            ###   ########.fr       */
+/*   Updated: 2021/06/01 18:37:31 by swang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ int	type_pointer(unsigned long long p, t_info *info)
 	if (p != 0 || (p == 0 && info->prec != 0))
 		info->ret_len += ft_putstr(pointer);
 	padding_right(info);
+	free(pointer);
+	pointer = 0;
 	return (info->ret_len);
 }

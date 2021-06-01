@@ -6,7 +6,7 @@
 /*   By: swang <swang@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 15:44:10 by swang             #+#    #+#             */
-/*   Updated: 2021/06/01 15:46:05 by swang            ###   ########.fr       */
+/*   Updated: 2021/06/01 18:35:10 by swang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ int	type_hexadecimal(unsigned int x, t_info *info)
 		info->ret_len += ft_putchar('0');
 	info->ret_len += ft_putstr(x_nbr);
 	padding_right(info);
+	free(x_nbr);
+	x_nbr = 0;
 	return (info->ret_len);
 }

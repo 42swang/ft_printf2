@@ -6,13 +6,19 @@
 /*   By: swang <swang@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 15:44:26 by swang             #+#    #+#             */
-/*   Updated: 2021/06/01 15:46:15 by swang            ###   ########.fr       */
+/*   Updated: 2021/06/01 18:51:01 by swang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int	type_num(int num, t_info *info)
+void		ft_free(char *str)
+{
+	free(str);
+	str = 0;
+}
+
+int			type_num(int num, t_info *info)
 {
 	int		prec_padding;
 	int		nbr_len;
@@ -37,5 +43,6 @@ int	type_num(int num, t_info *info)
 		info->ret_len += ft_putchar('0');
 	info->ret_len += ft_putstr(nbr);
 	padding_right(info);
+	ft_free(nbr);
 	return (info->ret_len);
 }
